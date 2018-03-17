@@ -2,7 +2,6 @@ package mainpackage.views;
 
 import java.util.List;
 import mainpackage.controller.API;
-import mainpackage.controller.Transformer;
 import mainpackage.models.AuthorModel;
 import mainpackage.models.BookModel;
 import mainpackage.models.DataResponseModel;
