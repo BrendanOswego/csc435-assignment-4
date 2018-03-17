@@ -1,10 +1,13 @@
 package mainpackage.views;
 
 import spark.Service;
+import mainpackage.controller.Transformer;
 
 public abstract class RestEndpoint {
 
     private Service service;
+    private static final Transformer transformer = new Transformer();
+    private static final String type = "application/json";
 
     public RestEndpoint(Service service) {
         this.service = service;
@@ -28,6 +31,14 @@ public abstract class RestEndpoint {
 
     public Service getService() {
         return service;
+    }
+
+    public Transformer getTransformer() {
+        return transformer;
+    }
+
+    public String getType() {
+        return type;
     }
 
 }
