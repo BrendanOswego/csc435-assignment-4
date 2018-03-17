@@ -4,10 +4,6 @@ public class DataResponseModel<T> extends ResponseModel {
 
   private T data;
 
-  public DataResponseModel() {
-    super();
-  }
-
   public T getData() {
     return data;
   }
