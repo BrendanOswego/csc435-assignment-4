@@ -1,16 +1,15 @@
 package mainpackage.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import spark.ResponseTransformer;
 
 public class Transformer implements ResponseTransformer {
 
-  private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+  private static final ObjectMapper mapper = new ObjectMapper();
 
   public String render(Object model) throws Exception {
-    return gson.toJson(model);
+    return mapper.writeValueAsString(model);
   }
 
 }

@@ -9,28 +9,25 @@ import mainpackage.models.DataResponseModel;
 import mainpackage.models.ResponseModel;
 import spark.Service;
 
-public class AuthorView implements IPath {
+public class AuthorView extends RestEndpoint {
 
   private static final Transformer transformer = new Transformer();
   private static final String type = "application/json";
 
-  public void configure(Service service) {
-    get(service);
-    post(service);
-    put(service);
-    delete(service);
+  public AuthorView(Service service) {
+    super(service);
   }
 
-  public void get(Service service) {
+  public void get() {
 
-    service.get("/authors", (req, res) -> {
+    getService().get("/authors", (req, res) -> {
       res.type(type);
       DataResponseModel<List<AuthorModel>> apiModel = API.instance().getAllAuthors();
       res.status(apiModel.getStatus());
       return apiModel;
     }, transformer);
 
-    service.get("/authors/:authorID", (req, res) -> {
+    getService().get("/authors/:authorID", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       DataResponseModel<AuthorModel> apiModel = API.instance().getAuthorById(authorID);
@@ -38,7 +35,7 @@ public class AuthorView implements IPath {
       return apiModel;
     }, transformer);
 
-    service.get("/authors/:authorID/books", (req, res) -> {
+    getService().get("/authors/:authorID/books", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       DataResponseModel<List<BookModel>> apiModel = API.instance().getBooksByAuthor(authorID);
@@ -48,16 +45,16 @@ public class AuthorView implements IPath {
 
   }
 
-  public void post(Service service) {
+  public void post() {
 
-    service.post("/authors", (req, res) -> {
+    getService().post("/authors", (req, res) -> {
       res.type(type);
       ResponseModel apiModel = API.instance().addAuthor(req);
       res.status(apiModel.getStatus());
       return apiModel;
     }, transformer);
 
-    service.post("/authors/:authorID/books", (req, res) -> {
+    getService().post("/authors/:authorID/books", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       ResponseModel apiModel = API.instance().addBookToAuthor(authorID, req);
@@ -67,9 +64,9 @@ public class AuthorView implements IPath {
 
   }
 
-  public void put(Service service) {
+  public void put() {
 
-    service.put("/authors/:authorID", (req, res) -> {
+    getService().put("/authors/:authorID", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       ResponseModel apiModel = API.instance().updateAuthor(authorID, req);
@@ -77,7 +74,7 @@ public class AuthorView implements IPath {
       return apiModel;
     }, transformer);
 
-    service.put("/authors/:authorID/books/:bookID", (req, res) -> {
+    getService().put("/authors/:authorID/books/:bookID", (req, res) -> {
       res.type(type);
       String bookID = req.params(":bookID");
       ResponseModel apiModel = API.instance().updateBook(bookID, req);
@@ -87,9 +84,9 @@ public class AuthorView implements IPath {
 
   }
 
-  public void delete(Service service) {
+  public void delete() {
 
-    service.delete("/authors/:authorID", (req, res) -> {
+    getService().delete("/authors/:authorID", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       ResponseModel apiModel = API.instance().removeAuthor(authorID, req);
@@ -97,7 +94,7 @@ public class AuthorView implements IPath {
       return apiModel;
     }, transformer);
 
-    service.delete("/authors/:authorID/books/:bookID", (req, res) -> {
+    getService().delete("/authors/:authorID/books/:bookID", (req, res) -> {
       res.type(type);
       String authorID = req.params(":authorID");
       String bookID = req.params(":bookID");

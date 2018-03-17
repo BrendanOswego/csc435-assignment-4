@@ -9,28 +9,25 @@ import mainpackage.models.DataResponseModel;
 import mainpackage.models.ResponseModel;
 import spark.Service;
 
-public class BookView implements IPath {
+public class BookView extends RestEndpoint {
 
   private static final Transformer transform = new Transformer();
   private static final String type = "application/json";
 
-  public void configure(Service service) {
-    get(service);
-    post(service);
-    put(service);
-    delete(service);
+  public BookView(Service service) {
+    super(service);
   }
 
-  public void get(Service service) {
+  public void get() {
 
-    service.get("/books", (req, res) -> {
+    getService().get("/books", (req, res) -> {
       res.type(type);
       DataResponseModel<List<BookModel>> apiModel = API.instance().getAllBooks();
       res.status(apiModel.getStatus());
       return apiModel;
     }, transform);
 
-    service.get("/books/:bookID", (req, res) -> {
+    getService().get("/books/:bookID", (req, res) -> {
       res.type(type);
       String bookID = req.params(":bookID");
       DataResponseModel<BookModel> apiModel = API.instance().getBook(bookID);
@@ -40,16 +37,16 @@ public class BookView implements IPath {
 
   }
 
-  public void post(Service service) {
+  public void post() {
     /**
      * Check with Alex if he wants this to POST, since needs
      * at least one author for book
      */
   }
 
-  public void put(Service service) {
+  public void put() {
 
-    service.put("/books/:bookID", (req, res) -> {
+    getService().put("/books/:bookID", (req, res) -> {
       res.type(type);
       String bookID = req.params(":bookID");
       ResponseModel apiModel = API.instance().updateBook(bookID, req);
@@ -59,9 +56,9 @@ public class BookView implements IPath {
 
   }
 
-  public void delete(Service service) {
+  public void delete() {
 
-    service.delete("/books/:bookID", (req, res) -> {
+    getService().delete("/books/:bookID", (req, res) -> {
       res.type(type);
       String bookID = req.params(":bookID");
       ResponseModel apiModel = API.instance().removeBook(bookID, req);

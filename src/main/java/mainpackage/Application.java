@@ -2,6 +2,7 @@ package mainpackage;
 
 import mainpackage.views.AuthorView;
 import mainpackage.views.BookView;
+import mainpackage.views.RestEndpoint;
 import spark.Service;
 
 public class Application {
@@ -14,12 +15,8 @@ public class Application {
 
         spark.get("/", (req, res) -> "API Running");
 
-        AuthorView authors = new AuthorView();
-        authors.configure(spark);
-
-        BookView books = new BookView();
-        books.configure(spark);
-
+        RestEndpoint authors = new AuthorView(spark);
+        RestEndpoint books = new BookView(spark);
     }
 
 }

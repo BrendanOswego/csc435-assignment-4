@@ -15,7 +15,7 @@ import mainpackage.models.BookAuthorModel;
 import mainpackage.models.BookModel;
 import mainpackage.models.DataResponseModel;
 import mainpackage.models.ResponseModel;
-import mainpackage.sql.SQLConnection;
+import mainpackage.connection.SQLConnection;
 import spark.Request;
 
 public class API {
